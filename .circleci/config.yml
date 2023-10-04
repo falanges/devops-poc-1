@@ -1,0 +1,33 @@
+version: 2.1
+
+workflows:
+  build-stage:
+    jobs:
+      - build
+
+jobs:
+  build:
+    docker:
+      - image: cimg/node:20.7
+    steps:
+      - checkout
+      - run: node --version
+      - restore_cache:
+          name: Restore pnpm Package cache
+          key: pnpm-packages-{{ checksum "pnpm-lock.yaml" }}
+      - run:
+          name: Install pnpm package manager
+          command: |
+            corepack enable
+            corepack prepare pnpm@latest-8 --activate
+      - run:
+          name: Install Dependencies
+          command: - "pnpm install"
+      - run:
+          name: Build monorepo
+          command: - "pnpm build"
+      - save_cache:
+          name: Save pnpm Package cache
+          key: pnpm-packages-{{ checksum "pnpm-lock.yaml" }}
+          paths:
+            - node_modules
