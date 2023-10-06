@@ -82,3 +82,4 @@ Open [http://localhost:3000](http://localhost:3001) with your browser to see the
 - [ ] AWS deployment
 - [ ] CD
 - [ ] Git hooks
+- [ ] ... All your suggestions are welcome!
