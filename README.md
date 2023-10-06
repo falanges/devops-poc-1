@@ -1,81 +1,85 @@
-# Turborepo starter
+## Preface
 
-This is an official starter Turborepo.
+(Work in progress)
+This repo was created with the only intention to show how do I structure my projects. Within, you will see a system which interacts with a fully working monorepo, and some customizations across the entire projects. You may note that I use a lot of different technologies, as listed above:
+- pnpm
+- Turborepo
+- Next.js
+- CircleCI
+- Terraform
+- Jest
+- Playwright
 
-## Using this example
+Feel free to give me your feedback about this project, I'm always open to learn new things and improve my skills.
 
-Run the following command:
+## Installation and usage
+You should clone this repo first:
 
-```sh
-npx create-turbo@latest
+```bash
+git clone https://github.com/falanges/devops-poc-1.git
 ```
 
-## What's inside?
+Then, if you don't have pnpm already installed, proceed with next options:
 
-This Turborepo includes the following packages/apps:
-
-### Apps and Packages
-
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `ui`: a stub React component library shared by both `web` and `docs` applications
-- `eslint-config-custom`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `tsconfig`: `tsconfig.json`s used throughout the monorepo
-
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
-
-### Utilities
-
-This Turborepo has some additional tools already setup for you:
-
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
-
-### Build
-
-To build all apps and packages, run the following command:
-
+### On Windows
+Using PowerShell:
+```bash
+iwr https://get.pnpm.io/install.ps1 -useb | iex
 ```
-cd my-turborepo
-pnpm build
+### On POSIX systems
+```bash
+curl -fsSL https://get.pnpm.io/install.sh | sh -
 ```
 
-### Develop
+If you don't have curl installed, you would like to use wget:
 
-To develop all apps and packages, run the following command:
-
-```
-cd my-turborepo
-pnpm dev
+```bash
+wget -qO- https://get.pnpm.io/install.sh | sh -
 ```
 
-### Remote Caching
-
-Turborepo can use a technique known as [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
-
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup), then enter the following commands:
-
+```bash
+npx pnpm install
 ```
-cd my-turborepo
-npx turbo login
-```
+Once you have pnpm working as expected, you can proceed with the next steps.
 
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
+## Development
+Turborepo cli will assist you to run the different commands, for instance, if you want to run all the apps at same time you can use the following command:
 
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
-
-```
-npx turbo link
+```bash
+turbo run dev
 ```
 
-## Useful Links
+You can opt to run just one app:
+```bash
+turbo run dev --filter=web
+```
 
-Learn more about the power of Turborepo:
+## Building
+You can build the entire project with the following command:
+```bash
+turbo run build
+```
 
-- [Tasks](https://turbo.build/repo/docs/core-concepts/monorepos/running-tasks)
-- [Caching](https://turbo.build/repo/docs/core-concepts/caching)
-- [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching)
-- [Filtering](https://turbo.build/repo/docs/core-concepts/monorepos/filtering)
-- [Configuration Options](https://turbo.build/repo/docs/reference/configuration)
-- [CLI Usage](https://turbo.build/repo/docs/reference/command-line-reference)
+## Testing
+You can run the tests with the following command:
+```bash
+turbo run test
+```
+
+There is a way to run tests in watch mode, in case you need to:
+```bash
+turbo run test:watch
+```
+
+Open [http://localhost:3000](http://localhost:3001) with your browser to see the result.
+
+## To Do
+
+- [ ] Add a better documentation
+- [ ] Playwright tests
+- [ ] Terraform
+- [ ] CircleCI improvements
+- [ ] AWS deployment
+- [ ] CD
+- [ ] Git hooks
+- [ ] ... All your suggestions are welcome!
