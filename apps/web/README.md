@@ -1,28 +1,84 @@
-## Getting Started
+## Preface
 
-First, run the development server:
+(Work in progress)
+This repo was created with the only intention to show how do I structure my projects. Within, you will see a system which interacts with a fully working monorepo, and some customizations across the entire projects. You may note that I use a lot of different technologies, as listed above:
+- pnpm
+- Turborepo
+- Next.js
+- CircleCI
+- Terraform
+- Jest
+- Playwright
+
+Feel free to give me your feedback about this project, I'm always open to learn new things and improve my skills.
+
+## Installation and usage
+You should clone this repo first:
 
 ```bash
-yarn dev
+git clone https://github.com/falanges/devops-poc-1.git
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Then, if you don't have pnpm already installed, proceed with next options:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### On Windows
+Using PowerShell:
+```bash
+iwr https://get.pnpm.io/install.ps1 -useb | iex
+```
+### On POSIX systems
+```bash
+curl -fsSL https://get.pnpm.io/install.sh | sh -
+```
 
-To create [API routes](https://nextjs.org/docs/app/building-your-application/routing/router-handlers) add an `api/` directory to the `app/` directory with a `route.ts` file. For individual endpoints, create a subfolder in the `api` directory, like `api/hello/route.ts` would map to [http://localhost:3000/api/hello](http://localhost:3000/api/hello).
+If you don't have curl installed, you would like to use wget:
 
-## Learn More
+```bash
+wget -qO- https://get.pnpm.io/install.sh | sh -
+```
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+npx pnpm install
+```
+Once you have pnpm working as expected, you can proceed with the next steps.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn/foundations/about-nextjs) - an interactive Next.js tutorial.
+## Development
+Turborepo cli will assist you to run the different commands, for instance, if you want to run all the apps at same time you can use the following command:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+```bash
+turbo run dev
+```
 
-## Deploy on Vercel
+You can opt to run just one app:
+```bash
+turbo run dev --filter=web
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_source=github.com&utm_medium=referral&utm_campaign=turborepo-readme) from the creators of Next.js.
+## Building
+You can build the entire project with the following command:
+```bash
+turbo run build
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Testing
+You can run the tests with the following command:
+```bash
+turbo run test
+```
+
+There is a way to run tests in watch mode, in case you need to:
+```bash
+turbo run test:watch
+```
+
+Open [http://localhost:3000](http://localhost:3001) with your browser to see the result.
+
+## To Do
+
+- [ ] Add a better documentation
+- [ ] Playwright tests
+- [ ] Terraform
+- [ ] CircleCI improvements
+- [ ] AWS deployment
+- [ ] CD
+- [ ] Git hooks
