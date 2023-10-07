@@ -79,7 +79,7 @@ Open [http://localhost:3000](http://localhost:3001) with your browser to see the
 - [ ] Playwright tests
 - [ ] Terraform
 - [ ] CircleCI improvements
-- [ ] AWS deployment
+- [ ] Vercel deployment
 - [ ] CD
 - [ ] Git hooks
 - [ ] ... All your suggestions are welcome!

@@ -1,33 +1,22 @@
 version: 2.1
 
 jobs:
-  base-workflow:
-    docker:
-      - image: cimg/node:20.7
-    steps:
-      - checkout
-      - run:
-          name: "Install pnpm package manager"
-          command: |
-            sudo corepack enable
-            sudo corepack prepare pnpm@latest-8 --activate
-            pnpm install
-      - save_cache:
-          name: Save pnpm Package cache
-          key: pnpm-packages-{{ checksum "pnpm-lock.yaml" }}
-          paths:
-            - node_modules
-
   lint:
     docker:
       - image: cimg/node:20.7
     steps:
-      - run: node --version
-      - run: pnpm --version
+      - run:
+          name: Install pnpm package manager
+          command: |
+            sudo corepack enable
+            sudo corepack prepare pnpm@latest-8 --activate
       - checkout
       - restore_cache:
           name: Restore pnpm Package cache
           key: pnpm-packages-{{ checksum "pnpm-lock.yaml" }}
+      - run:
+          name: Install Dependencies
+          command: pnpm install
       - run:
           name: "Lint monorepo"
           command: pnpm lint
@@ -36,8 +25,6 @@ jobs:
       - image: cimg/node:20.7
     steps:
       - checkout
-      - run: node --version
-      - run: whoami
       - run:
           name: Install pnpm package manager
           command: |
@@ -58,15 +45,55 @@ jobs:
           paths:
             - '.next/**'
             - '!.next/cache/**'
+  test:
+    docker:
+      - image: cimg/node:20.7
+    steps:
+      - checkout
+      - run:
+          name: Install pnpm package manager
+          command: |
+            sudo corepack enable
+            sudo corepack prepare pnpm@latest-8 --activate
+      - restore_cache:
+          name: Restore pnpm Package cache
+          key: pnpm-packages-{{ checksum "pnpm-lock.yaml" }}
+      - run:
+          name: Install Dependencies
+          command: pnpm install
+      - run:
+          name: Test monorepo
+          command: pnpm test
+  deploy:
+    docker:
+      - image: cimg/node:20.7
+    steps:
+      - checkout
+      - run: echo "Deploying sooner!"
+      # - run:
+      #     name: Install pnpm package manager
+      #     command: |
+      #       sudo corepack enable
+      #       sudo corepack prepare pnpm@latest-8 --activate
+      # - restore_cache:
+      #     name: Restore pnpm Package cache
+      #     key: pnpm-packages-{{ checksum "pnpm-lock.yaml" }}
+      # - run:
+      #     name: Install Dependencies
+      #     command: pnpm install
+      # - run:
+      #     name: Deploy monorepo
+      #     command: pnpm deploy
 
 workflows:
-
-  lint-build:
+  lint-test-build:
     jobs:
-      - base-workflow
-      - lint:
-          requires:
-            - base-workflow
-      - build:
-          requires:
-            - base-workflow
+      - lint
+      - test
+      - build
+  deploy-to-production:
+    jobs:
+      - deploy:
+          filters:
+            branches:
+              only: main
