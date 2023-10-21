@@ -43,8 +43,8 @@ jobs:
           name: Save build cache
           key: build-cache-{{ checksum "pnpm-lock.yaml" }}
           paths:
-            - '.next/**'
-            - '!.next/cache/**'
+            - "./node_modules",
+            - ".next/cache/**"
   test:
     docker:
       - image: cimg/node:20.7
@@ -64,6 +64,26 @@ jobs:
       - run:
           name: Test monorepo
           command: pnpm test
+
+  test-e2e:
+    docker:
+      - image: cimg/node:20.7
+    steps:
+      - checkout
+      - run:
+          name: Install pnpm package manager
+          command: |
+            sudo corepack enable
+            sudo corepack prepare pnpm@latest-8 --activate
+      - restore_cache:
+          name: Restore pnpm Package cache
+          key: pnpm-packages-{{ checksum "pnpm-lock.yaml" }}
+      - run:
+          name: Install Dependencies
+          command: pnpm install
+      - run:
+          name: Test monorepo
+          command: pnpm exec turbo test:e2e
   deploy:
     docker:
       - image: cimg/node:20.7
@@ -90,6 +110,7 @@ workflows:
     jobs:
       - lint
       - test
+      - test-e2e
       - build
   deploy-to-production:
     jobs:
