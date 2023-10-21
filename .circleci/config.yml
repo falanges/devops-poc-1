@@ -20,6 +20,7 @@ jobs:
       - run:
           name: "Lint monorepo"
           command: pnpm lint
+
   build:
     docker:
       - image: cimg/node:20.7
@@ -42,9 +43,8 @@ jobs:
       - save_cache:
           name: Save build cache
           key: build-cache-{{ checksum "pnpm-lock.yaml" }}
-          paths:
-            - "./node_modules",
-            - ".next/cache/**"
+          paths: ["!./node_modules", "!.next/cache/**"]
+
   test:
     docker:
       - image: cimg/node:20.7
@@ -84,12 +84,13 @@ jobs:
       - run:
           name: Test monorepo
           command: pnpm exec turbo test:e2e
+
   deploy:
     docker:
       - image: cimg/node:20.7
     steps:
       - checkout
-      - run: echo "Deploying sooner!"
+      - run: echo "Deployment feature sooner!"
       # - run:
       #     name: Install pnpm package manager
       #     command: |

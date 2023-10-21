@@ -8,7 +8,9 @@
     "build": "next build",
     "start": "next start",
     "test:watch": "jest --watch",
-    "dev": "next dev --port 3001"
+    "dev": "next dev --port 3001",
+    "test-e2e": "playwright test -c e2e/test-results",
+    "pretest": "tsc --incremental -p ./e2e/tsconfig.json"
   },
   "dependencies": {
     "next": "^13.4.19",

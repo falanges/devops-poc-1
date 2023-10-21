@@ -1,7 +1,7 @@
+import path from "node:path";
 import { defineConfig, devices } from "@playwright/test";
-import path from "path";
 
-const PORT = process.env.PORT || 3000;
+const PORT = 3000;
 const baseURL = `http://localhost:${PORT}`;
 
 export default defineConfig({
@@ -9,12 +9,12 @@ export default defineConfig({
   testDir: path.join(__dirname, "e2e"),
   outputDir: "test-results/",
   fullyParallel: true,
-  forbidOnly: !!process.env.CI,
+  forbidOnly: Boolean(process.env.CI),
   retries: process.env.CI ? 2 : 0,
   workers: process.env.CI ? 1 : undefined,
   reporter: [
     ["list"],
-    ["json", { outputFile: "test-results/test-results.json" }],
+    ["json", { outputFile: "./e2e/test-results/test-results.json" }],
   ],
   webServer: {
     command: "pnpm start",
