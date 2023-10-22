@@ -5,11 +5,11 @@
   "version": "1.0.0",
   "scripts": {
     "test": "jest",
-    "dev": "next dev --port 3000",
+    "dev": "next dev",
     "lint": "next lint",
     "build": "next build",
     "start": "next start",
-    "test-e2e": "playwright test -c e2e/test-results",
+    "test-e2e": "playwright test",
     "pretest": "tsc --incremental -p ./e2e/tsconfig.json",
     "test:watch": "node --experimental-vm-modules ./node_modules/jest/bin/jest.js --watch"
   },

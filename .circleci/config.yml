@@ -68,6 +68,10 @@ jobs:
   test-e2e:
     docker:
       - image: cimg/node:20.7
+        auth:
+          username: falanges
+          password: $DOCKERHUB_PASSWORD
+      - image: mcr.microsoft.com/playwright:v1.39.0-jammy
     steps:
       - checkout
       - run:
@@ -109,10 +113,16 @@ jobs:
 workflows:
   lint-test-build:
     jobs:
-      - lint
-      - test
-      - test-e2e
       - build
+      - lint:
+          requires:
+            - build
+      - test:
+          requires:
+            - build
+      - test-e2e:
+          requires:
+            - build
   deploy-to-production:
     jobs:
       - deploy:

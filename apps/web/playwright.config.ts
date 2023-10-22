@@ -1,8 +1,7 @@
-import path from "node:path";
+import path from "path";
 import { defineConfig, devices } from "@playwright/test";
 
-const PORT = 3000;
-const baseURL = `http://localhost:${PORT}`;
+const baseURL = `http://localhost:3000`;
 
 export default defineConfig({
   timeout: 30 * 1000,
@@ -17,9 +16,11 @@ export default defineConfig({
     ["json", { outputFile: "./e2e/test-results/test-results.json" }],
   ],
   webServer: {
-    command: "pnpm start",
     url: baseURL,
+    stderr: "pipe",
+    stdout: "ignore",
     timeout: 120 * 1000,
+    command: "pnpm start",
     reuseExistingServer: !process.env.CI,
   },
   use: {
