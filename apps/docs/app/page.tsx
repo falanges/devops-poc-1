@@ -1,6 +1,6 @@
 import Image from "next/image";
-import { Card } from "ui";
 import styles from "./page.module.css";
+import React from "react";
 
 function Gradient({
   conic,
@@ -126,9 +126,17 @@ export default function Page(): JSX.Element {
 
       <div className={styles.grid}>
         {LINKS.map(({ title, href, description }) => (
-          <Card className={styles.card} href={href} key={title} title={title}>
-            {description}
-          </Card>
+          <a
+            className={styles.card}
+            href={href}
+            key={title}
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            <h3>{title}</h3>
+            <p>{description}</p>
+            <Gradient className={styles.gradient} />
+          </a>
         ))}
       </div>
     </main>

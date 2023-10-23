@@ -1,4 +1,9 @@
 {
+  "name": "devops-poc-1",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
   "private": true,
   "author": {
     "name": "Matias Parache",
@@ -8,6 +13,7 @@
     "lint": "turbo run lint",
     "test": "turbo run test",
     "build": "turbo run build",
+    "clean": "turbo run clean",
     "test:watch": "turbo run test:watch",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "cl": "rm -fr node_modules && rm -fr apps/docs/node_modules && rm -fr apps/web/node_modules && rm -fr packages/eslint-config-custom/node_modules && rm -fr packages/test/node_modules && rm -fr packages/ui/node_modules"
@@ -15,9 +21,8 @@
   "devDependencies": {
     "turbo": "^1.10.14",
     "eslint": "^8.48.0",
-    "prettier": "^3.0.3",
-    "tsconfig": "workspace:*"
+    "prettier": "^3.0.3"
+
   },
-  "packageManager": "pnpm@8.6.10",
-  "name": "devops-poc-1"
+  "packageManager": "yarn@1.22.19"
 }
