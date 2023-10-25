@@ -1,72 +1,40 @@
 version: 2.1
 
-jobs:
-  base-workflow:
-    docker:
-      - image: cimg/node:20.7
-    steps:
-      - checkout
-      - run:
-          name: "Install pnpm package manager"
-          command: |
-            sudo corepack enable
-            sudo corepack prepare pnpm@latest-8 --activate
-            pnpm install
-      - save_cache:
-          name: Save pnpm Package cache
-          key: pnpm-packages-{{ checksum "pnpm-lock.yaml" }}
-          paths:
-            - node_modules
+orbs:
+  node: circleci/node@5.0.2
+  heroku: circleci/heroku@1.2.6
 
-  lint:
-    docker:
-      - image: cimg/node:20.7
-    steps:
-      - run: node --version
-      - run: pnpm --version
-      - checkout
-      - restore_cache:
-          name: Restore pnpm Package cache
-          key: pnpm-packages-{{ checksum "pnpm-lock.yaml" }}
-      - run:
-          name: "Lint monorepo"
-          command: pnpm lint
-  build:
-    docker:
-      - image: cimg/node:20.7
+jobs:
+  build_and_test: # this can be any name you choose
+    executor: node/default # use the default executor defined within the orb
     steps:
       - checkout
-      - run: node --version
-      - run: whoami
+      - node/install-packages:
+          pkg-manager: yarn
       - run:
-          name: Install pnpm package manager
-          command: |
-            sudo corepack enable
-            sudo corepack prepare pnpm@latest-8 --activate
-      - restore_cache:
-          name: Restore pnpm Package cache
-          key: pnpm-packages-{{ checksum "pnpm-lock.yaml" }}
+          command: yarn test
+          name: Run tests
       - run:
-          name: Install Dependencies
-          command: pnpm install
-      - run:
-          name: Build monorepo
-          command: pnpm build
-      - save_cache:
-          name: Save build cache
-          key: build-cache-{{ checksum "pnpm-lock.yaml" }}
-          paths:
-            - '.next/**'
-            - '!.next/cache/**'
+          command: yarn build
+          name: Build app
+      - persist_to_workspace:
+          root: ~/project
+          paths: .
+  deploy: # this can be any name you choose
+    executor: heroku/default
+    steps:
+      - attach_workspace:
+          at: ~/project
+      - heroku/deploy-via-git:
+          force: true # force push when pushing to the heroku remote, see: https://devcenter.heroku.com/articles/git
 
 workflows:
-
-  lint-build:
+  build_test_deploy: # this can be any name you choose
     jobs:
-      - base-workflow
-      - lint:
+      - build_and_test
+      - deploy:
           requires:
-            - base-workflow
-      - build:
-          requires:
-            - base-workflow
+            - build_and_test # only deploy if the build_and_test job has completed
+          filters:
+            branches:
+              only: main # only deploy when on main
