@@ -1,6 +1,6 @@
-version: v2
+apiVersion: v1
 kind: Namespace
 metadata:
-  name: devops-poc-namespace
+  name: devops-poc
   labels:
     app: devops-poc-app

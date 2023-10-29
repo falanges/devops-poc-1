@@ -1,0 +1,7 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: devops-poc-deploy
+  namespace: devops-poc
+spec:
+  replicas: 4

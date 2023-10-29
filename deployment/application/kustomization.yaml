@@ -1,0 +1,4 @@
+resources:
+  - 01-namespace.yaml
+  - 02-service.yaml
+  - 03-deployment.yaml

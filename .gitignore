@@ -37,3 +37,7 @@ yarn-error.log*
 
 # circleci
 process.yml
+
+# terraform
+
+*.terraform*

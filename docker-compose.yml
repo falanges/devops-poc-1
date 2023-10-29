@@ -9,7 +9,7 @@ services:
     volumes:
       - /apps/web/node_modules
       - ./web:/apps/web
-    restart: always
+    restart: false
     environment:
       - NODE_ENV=production
     ports:
@@ -24,7 +24,7 @@ services:
     volumes:
       - /apps/docs/node_modules
       - ./docs:/apps/docs
-    restart: always
+    restart: false
     environment:
       - NODE_ENV=production
     ports:

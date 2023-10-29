@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: devops-poc-deploy
+  namespace: devops-poc
   labels:
     app: devops-poc-app
   annotations:
@@ -26,6 +27,9 @@ spec:
         imagePullPolicy: Always
         ports:
         - containerPort: 3000
+        # volumeMounts:
+        # - name: config-volume
+        #   mountPath: /configs/
         resources:
           requests:
             memory: "64Mi"
@@ -33,3 +37,22 @@ spec:
           limits:
             memory: "256Mi"
             cpu: "500m"
+      - name: devops-poc-docs
+        image: ffalanges/mono-docs:v1
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 3001
+        # volumeMounts:
+        # - name: config-volume
+        #   mountPath: /configs/
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+          limits:
+            memory: "256Mi"
+            cpu: "500m"
+      # volumes:
+      # - name: config-volume
+      #   configMap:
+      #     name: devops-config

@@ -21,8 +21,11 @@
   },
   "devDependencies": {
     "eslint": "^8.48.0",
-    "prettier": "^3.0.3",
-    "turbo": "^1.10.16"
+    "prettier": "^3.0.3"
   },
-  "packageManager": "yarn@1.22.19"
+  "packageManager": "yarn@1.22.19",
+  "dependencies": {
+    "turbo": "^1.10.16",
+    "global": "^4.4.0"
+  }
 }
