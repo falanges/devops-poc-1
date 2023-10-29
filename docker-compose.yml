@@ -4,26 +4,33 @@ services:
   web:
     container_name: web
     build:
-      context: .
-      dockerfile: ./apps/web/Dockerfile
+      dockerfile: Dockerfile
+      context: ./apps/web
+    volumes:
+      - /apps/web/node_modules
+      - ./web:/apps/web
     restart: always
+    environment:
+      - NODE_ENV=production
     ports:
-      - 3000:3000
+      - "3000:3000"
     networks:
       - app_network
   docs:
     container_name: docs
     build:
-      context: .
-      dockerfile: ./apps/docs/Dockerfile
+      dockerfile: Dockerfile
+      context: ./apps/docs
+    volumes:
+      - /apps/docs/node_modules
+      - ./docs:/apps/docs
     restart: always
+    environment:
+      - NODE_ENV=production
     ports:
-      - 3001:3001
+      - "3001:3000"
     networks:
       - app_network
-# Define a network, which allows containers to communicate
-# with each other, by using their container name as a hostname
-
 networks:
   app_network:
-    external: true
+    external: false

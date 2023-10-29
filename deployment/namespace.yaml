@@ -1,0 +1,6 @@
+version: v2
+kind: Namespace
+metadata:
+  name: devops-poc-namespace
+  labels:
+    app: devops-poc-app
