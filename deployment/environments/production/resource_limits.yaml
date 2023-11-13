@@ -1,12 +1,12 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: devops-poc-deployment
-  namespace: devops-poc-ns
+  name: devops-poc-deploy
+  namespace: devops-poc
 spec:
   template:
     spec:
-    containers:
+      containers:
       - name: devops-poc-web
         resources:
           requests:

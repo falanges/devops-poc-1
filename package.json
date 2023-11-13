@@ -15,6 +15,7 @@
     "test": "turbo run test",
     "build": "turbo run build",
     "clean": "turbo run clean",
+    "start": "turbo run start",
     "test:watch": "turbo run test:watch",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "cl": "rm -fr node_modules && rm -fr apps/docs/node_modules && rm -fr apps/web/node_modules && rm -fr packages/eslint-config-custom/node_modules && rm -fr packages/test/node_modules && rm -fr packages/ui/node_modules"

@@ -9,7 +9,7 @@ services:
     volumes:
       - /apps/web/node_modules
       - ./web:/apps/web
-    restart: false
+    restart: on-failure:3
     environment:
       - NODE_ENV=production
     ports:
@@ -24,7 +24,7 @@ services:
     volumes:
       - /apps/docs/node_modules
       - ./docs:/apps/docs
-    restart: false
+    restart: on-failure:3
     environment:
       - NODE_ENV=production
     ports:
