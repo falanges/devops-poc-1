@@ -1,32 +1,32 @@
 {
   "name": "devops-poc-1",
-  "workspaces": [
-    "apps/*",
-    "packages/*"
-  ],
-  "private": true,
   "author": {
     "name": "Matias Parache",
     "email": "matiasparache@pm.me"
   },
+  "version": "0.0.0",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
   "scripts": {
-    "dev": "turbo run dev",
-    "lint": "turbo run lint",
-    "test": "turbo run test",
     "build": "turbo run build",
     "clean": "turbo run clean",
-    "start": "turbo run start",
-    "test:watch": "turbo run test:watch",
+    "dev": "turbo run dev",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "cl": "rm -fr node_modules && rm -fr apps/docs/node_modules && rm -fr apps/web/node_modules && rm -fr packages/eslint-config-custom/node_modules && rm -fr packages/test/node_modules && rm -fr packages/ui/node_modules"
+    "lint": "turbo run lint",
+    "test": "turbo run test"
   },
+  "dependencies": {},
   "devDependencies": {
-    "eslint": "^8.48.0",
-    "prettier": "^3.0.3"
+    "eslint-config-custom": "*",
+    "prettier": "^2.8.8",
+    "turbo": "latest"
   },
   "packageManager": "yarn@1.22.19",
-  "dependencies": {
-    "turbo": "^1.10.16",
-    "global": "^4.4.0"
+  "engines": {
+    "node": ">=14.0.0",
+    "npm": ">=7.0.0"
   }
 }

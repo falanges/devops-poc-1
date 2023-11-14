@@ -4,9 +4,13 @@
   "globalEnv": ["PORT"],
   "pipeline": {
     "build": {
+      "outputs": ["dist/**", ".next/**", "!.next/cache/**", "public/dist/**"],
       "dependsOn": ["^build"],
-      "env": ["NEXT_PUBLIC_API_HOST"],
-      "outputs": [".next/**", "!.next/cache/**"]
+      "env": ["NEXT_PUBLIC_API_HOST"]
+    },
+    "test": {
+      "outputs": ["coverage/**"],
+      "dependsOn": []
     },
     "lint": {
       "dependsOn": ["^build"]
@@ -15,16 +19,8 @@
       "cache": false,
       "persistent": true
     },
-    "test": {},
-    "test:watch": {
-      "cache": false
-    },
     "clean": {
       "cache": false
-    },
-    "start": {
-      "dependsOn": ["^build"],
-      "env": ["NEXT_PUBLIC_API_HOST"]
     }
   }
 }

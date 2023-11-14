@@ -58,12 +58,26 @@ turbo run test:watch
 ```
 
 Open [http://localhost:3000](http://localhost:3001) with your browser to see the result.
+### Docker
+
+This repo is configured to be built with Docker, and Docker compose. To build all apps in this repo:
+
+```
+# Create a network, which allows containers to communicate
+# with each other, by using their container name as a hostname
+docker network create app_network
+
+# Build prod using new BuildKit engine
+COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 docker-compose -f docker-compose.yml build
+
+# Start prod in detached mode
+docker-compose -f docker-compose.yml up -d
 
 ## To Do
 
 - [ ] Add a better documentation
 - [ ] Playwright tests
-- [ ] Terraform
+- [X] Terraform
 - [ ] CircleCI improvements
 - [ ] AWS deployment
 - [ ] CD

@@ -1,0 +1,87 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    deployment.kubernetes.io/revision: "1"
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"labels":{"app":"devops-poc-app"},"name":"devops-poc-deploy","namespace":"devops-poc"},"spec":{"replicas":2,"selector":{"matchLabels":{"app":"devops-poc-app"}},"strategy":{"rollingUpdate":{"maxSurge":1,"maxUnavailable":0},"type":"RollingUpdate"},"template":{"metadata":{"labels":{"app":"devops-poc-app"}},"spec":{"containers":[{"image":"ffalanges/mono-web:v1","imagePullPolicy":"Always","name":"devops-poc-web","ports":[{"containerPort":3000}],"resources":{"limits":{"cpu":"500m","memory":"256Mi"},"requests":{"cpu":"50m","memory":"64Mi"}}},{"image":"ffalanges/mono-docs:v1","imagePullPolicy":"Always","name":"devops-poc-docs","ports":[{"containerPort":3001}],"resources":{"limits":{"cpu":"500m","memory":"256Mi"},"requests":{"cpu":"50m","memory":"64Mi"}}}]}}}}
+  creationTimestamp: "2023-10-29T23:30:08Z"
+  generation: 1
+  labels:
+    app: devops-poc-app
+  name: devops-poc-deploy
+  namespace: devops-poc
+  resourceVersion: "322956"
+  uid: 961de28e-ee3b-4b81-80d2-26fffd6efab5
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 2
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: devops-poc-app
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+    type: RollingUpdate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: devops-poc-app
+    spec:
+      containers:
+      - image: ffalanges/mono-web:v1
+        imagePullPolicy: Always
+        name: devops-poc-web
+        ports:
+        - containerPort: 3000
+          protocol: TCP
+        resources:
+          limits:
+            cpu: 500m
+            memory: 256Mi
+          requests:
+            cpu: 50m
+            memory: 64Mi
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      - image: ffalanges/mono-docs:v1
+        imagePullPolicy: Always
+        name: devops-poc-docs
+        ports:
+        - containerPort: 3001
+          protocol: TCP
+        resources:
+          limits:
+            cpu: 500m
+            memory: 256Mi
+          requests:
+            cpu: 50m
+            memory: 64Mi
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+status:
+  conditions:
+  - lastTransitionTime: "2023-10-29T23:30:08Z"
+    lastUpdateTime: "2023-10-29T23:30:08Z"
+    message: Deployment does not have minimum availability.
+    reason: MinimumReplicasUnavailable
+    status: "False"
+    type: Available
+  - lastTransitionTime: "2023-10-29T23:30:08Z"
+    lastUpdateTime: "2023-10-29T23:30:08Z"
+    message: ReplicaSet "devops-poc-deploy-5946bcdc45" is progressing.
+    reason: ReplicaSetUpdated
+    status: "True"
+    type: Progressing
+  observedGeneration: 1
+  replicas: 2
+  unavailableReplicas: 2
+  updatedReplicas: 2
